@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Networking Quiz: Modules 9–13</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#eef2f6;--card:#fff;--ink:#14213a;--mute:#52607a;--line:#c9d3e0;--acc:#1f5fd0;--accbg:#e3ecfb;--ok:#13683a;--okbg:#e2f4e9;--bad:#a1261f;--badbg:#fbe6e4;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1624;--card:#17203300;--card:#172033;--ink:#e6ecf7;--mute:#9aa8c2;--line:#2c3a56;--acc:#7eaaf5;--accbg:#1d2c4a;--ok:#6fd49a;--okbg:#12301f;--bad:#ff9a92;--badbg:#3a1815}}
+:root[data-theme="dark"]{--bg:#0f1624;--card:#172033;--ink:#e6ecf7;--mute:#9aa8c2;--line:#2c3a56;--acc:#7eaaf5;--accbg:#1d2c4a;--ok:#6fd49a;--okbg:#12301f;--bad:#ff9a92;--badbg:#3a1815}
+html{color-scheme:light dark;scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.55 "IBM Plex Sans",system-ui,sans-serif}
+main{max-width:720px;margin:0 auto;padding:28px 18px 64px}
+h1{font-size:1.9rem;line-height:1.2;margin:0 0 6px;font-weight:600}
+.sub{color:var(--mute);margin:0 0 20px}
+.sheet{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin-bottom:16px}
+.ident{display:grid;grid-template-columns:1fr 12rem auto;gap:14px;align-items:end}
+@media(max-width:600px){.ident{grid-template-columns:1fr}}
+label.f{display:block;font-size:.9rem;color:var(--mute)}
+input[type=text],input[type=date]{width:100%;font:inherit;color:var(--ink);background:transparent;border:0;border-bottom:2px solid var(--line);padding:6px 2px;border-radius:0}
+input[type=text]:focus,input[type=date]:focus{outline:none;border-color:var(--acc)}
+.pts{font-weight:500;white-space:nowrap}
+.dir{margin:0}
+.q{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin-bottom:16px;border:1px solid var(--line)}
+.q legend{padding:0;font-weight:600;float:left;width:100%;margin-bottom:12px}
+.q legend+*{clear:both}
+.mod{display:block;font-size:.85rem;font-weight:500;color:var(--mute);margin-bottom:2px}
+.two{display:inline-block;font-size:.85rem;font-weight:600;color:var(--acc);background:var(--accbg);border-radius:5px;padding:0 7px;margin-right:6px}
+.opt{display:flex;gap:12px;align-items:flex-start;padding:9px 10px;margin:0 -10px;border-radius:8px;cursor:pointer}
+.opt:hover{background:var(--accbg)}
+.opt input{margin:5px 0 0;width:18px;height:18px;accent-color:var(--acc);flex:none}
+.ltr{font-weight:600;width:1.2em;flex:none}
+.opt:has(input:checked){background:var(--accbg)}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:.95em}
+.bar{position:sticky;bottom:0;background:var(--bg);padding:12px 0 calc(12px + env(safe-area-inset-bottom,0px));display:flex;gap:14px;align-items:center;justify-content:space-between;border-top:1px solid var(--line)}
+button{font:600 1rem "IBM Plex Sans",sans-serif;background:var(--acc);color:#fff;border:0;border-radius:8px;padding:11px 22px;cursor:pointer}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) button{color:#0f1624}}
+:root[data-theme="dark"] button{color:#0f1624}
+button:disabled{opacity:.45;cursor:not-allowed}
+button.alt{background:transparent;color:var(--acc);border:2px solid var(--acc)}
+button:focus-visible,.opt:focus-within{outline:3px solid var(--acc);outline-offset:2px}
+.prog{color:var(--mute);font-size:.95rem}
+#result{display:none}
+.hero{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
+.big{font:600 3.4rem/1 "IBM Plex Sans";letter-spacing:-.02em}
+.big small{font-size:1.4rem;color:var(--mute);font-weight:500}
+.rv{border-left:6px solid var(--line)}
+.rv.ok{border-left-color:var(--ok)}.rv.no{border-left-color:var(--bad)}
+.tag{display:inline-block;font-weight:600;font-size:.9rem;border-radius:5px;padding:1px 9px;margin-bottom:8px}
+.ok .tag{background:var(--okbg);color:var(--ok)}.no .tag{background:var(--badbg);color:var(--bad)}
+.ro{display:flex;gap:10px;padding:5px 0;align-items:flex-start}
+.mk{flex:none;font-size:.8rem;font-weight:600;border-radius:5px;padding:0 7px;margin-left:auto;white-space:nowrap}
+.mk.c{background:var(--okbg);color:var(--ok)}.mk.w{background:var(--badbg);color:var(--bad)}.mk.p{background:var(--accbg);color:var(--acc)}
+.why{margin:12px 0 0;padding-top:12px;border-top:1px solid var(--line)}
+.why b{font-weight:600}
+@media print{.bar,.noprint{display:none!important}}
+</style>
+</head>
+<body>
+<main>
+<h1>Networking Quiz: Modules 9–13</h1>
+<p class="sub">Addressing, DHCP, gateways, NAT, and ARP</p>
+
+<div id="quiz">
+  <div class="sheet">
+    <div class="ident">
+      <label class="f">Name<input type="text" id="name" autocomplete="name"></label>
+      <label class="f">Date<input type="date" id="date"></label>
+      <div class="pts">Score: <span id="liveScore">____</span> / 8</div>
+    </div>
+  </div>
+  <div class="sheet dir"><strong>Directions:</strong> You may use your notes. Choose the answer for each question. Each question is worth 1 point. Questions marked <span class="two">Select TWO</span> have exactly two correct answers, and you must choose both to earn the point.</div>
+  <div id="qs"></div>
+  <div class="bar">
+    <span class="prog" id="prog" aria-live="polite">0 of 8 answered</span>
+    <button id="submit" disabled>Submit quiz</button>
+  </div>
+</div>
+
+<div id="result" tabindex="-1">
+  <div class="sheet hero">
+    <div class="big" id="bigScore"></div>
+    <div><div id="who" style="font-weight:600"></div><div id="msg" class="sub" style="margin:0"></div></div>
+  </div>
+  <div id="review"></div>
+  <div class="bar noprint"><span class="prog">Review each explanation before you move on.</span><span><button class="alt" id="print">Print results</button> <button id="retake">Retake quiz</button></span></div>
+</div>
+</main>
+
+<script>
+var Q=[
+{m:9,t:"Which address is a private (RFC 1918) address?",o:["172.32.1.1","192.168.50.7","11.0.0.5","169.254.3.8","209.165.200.1"],mono:1,a:[1],
+ w:"192.168.0.0/16 is a private range. 172.32.1.1 is just outside 172.16.0.0 to 172.31.255.255, and 169.254.x.x is link-local."},
+{m:9,t:"A packet sent to 255.255.255.255 is an example of which type of transmission?",o:["Unicast","Multicast","Broadcast","Loopback","Link-local"],a:[2],
+ w:"255.255.255.255 is the limited broadcast address."},
+{m:11,two:1,t:"Which two are advantages of dynamic (DHCP) addressing compared to static addressing?",o:["The address of each host never changes","It reduces the burden on network support staff","It is the best choice for servers and printers","It requires typing every address into each host by hand","It virtually eliminates address entry errors"],a:[1,4],
+ w:"Dynamic addressing reduces the burden on support staff and virtually eliminates entry errors. Static addressing suits servers and printers."},
+{m:11,t:"What is the correct order of the four DHCP messages?",o:["Offer, Discover, Request, Acknowledgment","Discover, Request, Offer, Acknowledgment","Request, Offer, Discover, Acknowledgment","Discover, Offer, Request, Acknowledgment","Offer, Request, Discover, Acknowledgment"],a:[3],
+ w:"Discover, Offer, Request, Acknowledgment (DORA)."},
+{m:12,t:"A host needs to reach a destination on a different network. What is its default gateway?",o:["The IP address of the destination host","The IP address of the ISP’s DNS server","The broadcast address of the local network","The MAC address of the switch","The IP address of the router interface on the host’s own network"],a:[4],
+ w:"The default gateway is the router interface on the host’s own network."},
+{m:12,t:"A packet from a private host leaves the network through a router using NAT. What happens to the packet?",o:["The private source address is replaced with a public address","The destination address is replaced with a private address","The packet is converted into a frame","The subnet mask is removed","The packet is changed into a broadcast"],a:[0],
+ w:"NAT replaces the private source address with a public one. The router reverses this for returning traffic."},
+{m:13,two:1,t:"Which two statements about an ARP request are true?",o:["It is sent only to the default gateway","Routers forward it to other networks","It is sent as an Ethernet broadcast","The reply to it is flooded to every device on the network","It asks which device has a given IPv4 address and requests that device’s MAC address"],a:[2,4],
+ w:"An ARP request is an Ethernet broadcast asking who has an IPv4 address. Routers do not forward it, and the ARP reply goes back to the requesting host."},
+{m:13,t:"PC1 sends a packet to a host on a remote network. What is the destination MAC address in the first frame PC1 sends?",o:["The MAC address of the remote host","FFFF.FFFF.FFFF","The MAC address of the DNS server","The MAC address of the default gateway","The MAC address of the switch"],mono:0,a:[3],
+ w:"For a remote destination, the frame is addressed to the default gateway’s MAC address."}
+];
+var L="ABCDE",$=function(i){return document.getElementById(i)};
+function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;")}
+function fmt(q,s){return q.mono?'<span class="mono">'+esc(s)+'</span>':esc(s)}
+
+try{var d=new Date();$("date").value=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}catch(e){}
+
+$("qs").innerHTML=Q.map(function(q,i){
+  var type=q.two?"checkbox":"radio";
+  return '<fieldset class="q"><legend><span class="mod">Question '+(i+1)+' · Module '+q.m+'</span>'+(q.two?'<span class="two">Select TWO</span>':'')+esc(q.t)+'</legend>'+
+  q.o.map(function(o,j){return '<label class="opt"><input type="'+type+'" name="q'+i+'" value="'+j+'"><span class="ltr">'+L[j]+'.</span><span>'+fmt(q,o)+'</span></label>'}).join("")+'</fieldset>'}).join("");
+
+function picks(i){return Array.prototype.map.call(document.querySelectorAll('input[name=q'+i+']:checked'),function(x){return +x.value})}
+function update(){
+  var n=0;Q.forEach(function(q,i){var p=picks(i).length;if(q.two?p===2:p===1)n++});
+  $("prog").textContent=n+" of 8 answered"+(n<8?" (Select TWO needs exactly two choices)":"");
+  $("submit").disabled=n<8;
+}
+$("qs").addEventListener("change",function(e){
+  var t=e.target;
+  if(t.type==="checkbox"){var c=document.querySelectorAll('input[name='+t.name+']:checked');if(c.length>2){t.checked=false}}
+  update();
+});
+
+function same(a,b){return a.length===b.length&&a.every(function(x){return b.indexOf(x)>-1})}
+$("submit").onclick=function(){
+  var score=0,html="";
+  Q.forEach(function(q,i){
+    var p=picks(i),ok=same(p,q.a);if(ok)score++;
+    var rows=q.o.map(function(o,j){
+      var isA=q.a.indexOf(j)>-1,isP=p.indexOf(j)>-1,mk="";
+      if(isA&&isP)mk='<span class="mk c">Your answer · Correct</span>';
+      else if(isA)mk='<span class="mk c">Correct answer</span>';
+      else if(isP)mk='<span class="mk w">Your answer · Incorrect</span>';
+      return '<div class="ro"><span class="ltr">'+L[j]+'.</span><span>'+fmt(q,o)+'</span>'+mk+'</div>'}).join("");
+    var corr=q.a.map(function(j){return L[j]}).join(" and ");
+    html+='<div class="q rv '+(ok?"ok":"no")+'"><span class="tag">'+(ok?"✓ Correct":"✗ Missed")+' · 1 point '+(ok?"earned":"not earned")+'</span><span class="mod">Question '+(i+1)+' · Module '+q.m+'</span><strong>'+(q.two?'Select TWO. ':'')+esc(q.t)+'</strong><div style="margin-top:8px">'+rows+'</div><p class="why"><b>Answer: '+corr+'.</b> '+esc(q.w)+(!ok&&q.two&&p.length===2&&p.some(function(x){return q.a.indexOf(x)>-1})?' You chose one correct answer, but both are required for the point.':'')+'</p></div>';
+  });
+  $("review").innerHTML=html;
+  $("bigScore").innerHTML=score+' <small>/ 8</small>';
+  var nm=$("name").value.trim();
+  $("who").textContent=(nm||"Name not entered")+" · "+($("date").value||"");
+  $("msg").textContent=score===8?"Perfect score. Every question correct.":(8-score)+" missed. Read the explanations below and note what to review.";
+  $("quiz").style.display="none";$("result").style.display="block";
+  window.scrollTo(0,0);$("result").focus();
+};
+$("print").onclick=function(){window.print()};
+$("retake").onclick=function(){
+  document.querySelectorAll("#qs input").forEach(function(x){x.checked=false});
+  update();$("result").style.display="none";$("quiz").style.display="block";window.scrollTo(0,0);
+};
+update();
+</script>
+</body>
+</html>
